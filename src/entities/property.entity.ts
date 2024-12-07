@@ -2,6 +2,7 @@ import {
   Column,
   Entity,
   JoinColumn,
+  ManyToMany,
   ManyToOne,
   OneToOne,
   PrimaryColumn,
@@ -38,4 +39,7 @@ export class Property {
   @ManyToOne(() => User, (userInstance) => userInstance.properties)
   @JoinColumn({ name: 'ownerId' })
   user: User;
+
+  @ManyToMany(() => User, userInstance => userInstance.likedProperties)
+  likedBy: User[]
 }
