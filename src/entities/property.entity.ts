@@ -1,4 +1,11 @@
-import { Column, Entity, PrimaryColumn, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  OneToOne,
+  PrimaryColumn,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { PropertyFeature } from './propertyFeature.entity';
 
 @Entity()
 export class Property {
@@ -14,4 +21,14 @@ export class Property {
 
   @Column({ default: 0 }) //passing default value
   price: number;
+
+  @OneToOne(
+    () => PropertyFeature,
+    (propertyFeatureInstance) => propertyFeatureInstance.property,
+    {
+      // cascade: ['update'],  // cascade only in update operation
+      cascade: true, // cascade on all operations
+    },
+  )
+  propertyFeature: PropertyFeature;
 }
