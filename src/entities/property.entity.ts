@@ -1,11 +1,14 @@
 import {
   Column,
   Entity,
+  JoinColumn,
+  ManyToOne,
   OneToOne,
   PrimaryColumn,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { PropertyFeature } from './propertyFeature.entity';
+import { User } from './user.entity';
 
 @Entity()
 export class Property {
@@ -31,4 +34,8 @@ export class Property {
     },
   )
   propertyFeature: PropertyFeature;
+
+  @ManyToOne(() => User, (userInstance) => userInstance.properties)
+  @JoinColumn({ name: 'ownerId' })
+  user: User;
 }
