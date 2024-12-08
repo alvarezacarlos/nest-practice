@@ -1,5 +1,6 @@
 import {
   Column,
+  Decimal128,
   Entity,
   JoinColumn,
   ManyToMany,
@@ -10,10 +11,10 @@ import {
 } from 'typeorm';
 import { PropertyFeature } from './propertyFeature.entity';
 import { User } from './user.entity';
+import { PropertyType } from './propertyType.entity';
 
 @Entity()
 export class Property {
-  // auto increment field (pk)
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -23,23 +24,23 @@ export class Property {
   @Column()
   description: string;
 
-  @Column({ default: 0 }) //passing default value
+  @Column('decimal', { precision: 10, scale: 2 })
   price: number;
 
   @OneToOne(
     () => PropertyFeature,
-    (propertyFeatureInstance) => propertyFeatureInstance.property,
-    {
-      // cascade: ['update'],  // cascade only in update operation
-      cascade: true, // cascade on all operations
-    },
+    (propertyFeature) => propertyFeature.property,
+    { cascade: true },
   )
   propertyFeature: PropertyFeature;
 
-  @ManyToOne(() => User, (userInstance) => userInstance.properties)
+  @ManyToOne(() => User, (user) => user.properties)
   @JoinColumn({ name: 'ownerId' })
   user: User;
 
-  @ManyToMany(() => User, userInstance => userInstance.likedProperties)
-  likedBy: User[]
+  @ManyToMany(() => User, (user) => user.likedProperties)
+  likedBy: User[];
+
+  @ManyToOne(() => PropertyType)
+  type: PropertyType;
 }

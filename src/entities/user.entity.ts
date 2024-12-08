@@ -29,10 +29,10 @@ export class User {
   @CreateDateColumn()
   createdAt: Date;
 
-  @OneToMany(() => Property, (propertyInstance) => propertyInstance.user)
+  @OneToMany(() => Property, (property) => property.user)
   properties: Property[];
 
-  @ManyToMany(() => Property, (propertyInstance) => propertyInstance.likedBy)
-  @JoinTable({ name: 'user_likes_properties' })
+  @ManyToMany(() => Property, (property) => property.likedBy)
+  @JoinTable({ name: 'user_liked_properties' })
   likedProperties: Property[];
 }

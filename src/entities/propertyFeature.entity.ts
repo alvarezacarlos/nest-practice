@@ -1,5 +1,11 @@
-import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
-import { Property } from "./property.entity";
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { Property } from './property.entity';
 
 @Entity()
 export class PropertyFeature {
@@ -13,7 +19,10 @@ export class PropertyFeature {
   bathrooms: number;
 
   @Column()
-  areas: number;
+  parkingSpots: number;
+
+  @Column()
+  area: number;
 
   @Column()
   hasBalcony: boolean;
@@ -24,7 +33,7 @@ export class PropertyFeature {
   @Column()
   hasSwimmingPool: boolean;
 
-  @OneToOne(() => Property, propertyInstance => propertyInstance.propertyFeature)
+  @OneToOne(() => Property, (property) => property.propertyFeature)
   @JoinColumn()
-  property: Property
+  property: Property;
 }
