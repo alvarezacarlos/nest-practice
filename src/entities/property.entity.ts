@@ -24,7 +24,7 @@ export class Property {
   @Column()
   description: string;
 
-  @Column('decimal', { precision: 10, scale: 2 })
+  @Column('decimal', { precision: 10, scale: 2, default: 0})
   price: number;
 
   @OneToOne(

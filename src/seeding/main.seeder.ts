@@ -30,7 +30,7 @@ export class MainSeeder implements Seeder {
     console.log('seeding properties...');
 
     const properties = await Promise.all(
-      Array(50)
+      Array(500)
         .fill('')
         .map(async () => {
           const property = await propertyFactory.make({
