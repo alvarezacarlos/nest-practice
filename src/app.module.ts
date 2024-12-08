@@ -6,6 +6,7 @@ import { PropertyModule } from './property/property.module';
 
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
+import { UserModule } from './user/user.module';
 import dbConfig from './config/db.config';
 import dbConfigProduction from './config/db.config.production';
 
@@ -21,7 +22,8 @@ import dbConfigProduction from './config/db.config.production';
     TypeOrmModule.forRootAsync({
       useFactory:
         process.env.NODE_ENV === 'production' ? dbConfigProduction : dbConfig,
-    }), //forRootAsync because we are passing a factory module
+    }),
+    UserModule, //forRootAsync because we are passing a factory module
   ],
   controllers: [AppController],
   providers: [AppService],
