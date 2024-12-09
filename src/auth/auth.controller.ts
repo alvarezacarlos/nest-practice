@@ -3,12 +3,14 @@ import {
   HttpCode,
   HttpStatus,
   Post,
+  Req,
   Request,
   UseGuards,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthGuard } from '@nestjs/passport';
 import { LocalAuthGuard } from './guards/local-auth/local-auth.guard';
+import { RefreshGuardGuard } from './guards/refresh-guard/refresh-guard.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -26,5 +28,11 @@ export class AuthController {
       id: req.user.id,
       token,
     };
+  }
+
+  @UseGuards(RefreshGuardGuard)
+  @Post('refresh')
+  refreshToken(@Req() req){
+    return this.authService.refreshToken(req.user.id)
   }
 }
